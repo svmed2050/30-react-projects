@@ -7,6 +7,9 @@ import { Users } from './components/Users'
 
 function App() {
 	const [users, setUsers] = React.useState([])
+	const [isLoading, setLoading] = React.useState(true)
+
+	// console.log(users)
 
 	React.useEffect(() => {
 		fetch(`https://reqres.in/api/users`)
@@ -16,11 +19,12 @@ function App() {
 				console.warn(err)
 				alert('An error occured while fetching users')
 			})
+			.finally(() => setLoading(false))
 	}, [])
 
 	return (
 		<div className='App'>
-			<Users />
+			<Users items={users} isLoading={isLoading} />
 			{/* <Success /> */}
 		</div>
 	)
