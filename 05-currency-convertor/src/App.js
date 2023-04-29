@@ -7,42 +7,56 @@ https://apilayer.com/marketplace/exchangerates_data-api
 */
 
 function App() {
-	const [fromCurrency, setFromCurrency] = React.useState('RUB')
+	const [fromCurrency, setFromCurrency] = React.useState('USD')
 	const [toCurrency, setToCurrency] = React.useState('USD')
-	const [rates, setRates] = React.useState({})
+	const [fromPrice, setFromPrice] = React.useState(0)
+	const [toPrice, setToPrice] = React.useState(0)
+
 	const apikey = 'MGQcCrvbmwnmNKXujVcUnRM8hiV9XLDt'
-	const requestOptions = {
-		method: 'GET',
-		headers: {
-			apikey,
-		},
-	}
 
 	React.useEffect(() => {
-		const url =
-			'https://api.apilayer.com/exchangerates_data/convert?to=EUR&from=USD&amount=20'
-		fetch(url, requestOptions)
-			.then((res) => res.json())
-			.then((json) => {
-				setRates(json.result)
-				console.log(json.result)
-			})
-			.catch((err) => {
-				console.warn(err)
-				alert('Failed to get information')
-			})
-	}, [])
+		const requestOptions = {
+			method: 'GET',
+			headers: {
+				apikey,
+			},
+		}
+		if (fromPrice) {
+			const url = `https://api.apilayer.com/exchangerates_data/convert?to=${toCurrency}&from=${fromCurrency}&amount=${fromPrice}`
+			fetch(url, requestOptions)
+				.then((res) => res.json())
+				.then((json) => {
+					setToPrice(json.result)
+				})
+				.catch((err) => {
+					console.warn(err)
+					alert('Failed to get information')
+				})
+		}
+	}, [toCurrency, fromCurrency, fromPrice])
+
+	const onChangeFromPrice = (value) => {
+		setFromPrice(value)
+	}
+
+	const onChangeToPrice = (value) => {
+		setToPrice(value)
+	}
 
 	return (
 		<div className='App'>
 			<Block
-				value={0}
+				value={fromPrice}
 				currency={fromCurrency}
 				onChangeCurrency={setFromCurrency}
+				onChangeValue={onChangeFromPrice}
 			/>
-			<Block value={0} currency={toCurrency} onChangeCurrency={setToCurrency} />
-
-			<Block value={0} currency='USD' />
+			<Block
+				value={toPrice}
+				currency={toCurrency}
+				onChangeCurrency={setToCurrency}
+				onChangeValue={onChangeToPrice}
+			/>
 		</div>
 	)
 }
