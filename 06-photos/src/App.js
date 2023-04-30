@@ -18,10 +18,12 @@ const cats = [
 
 function App() {
 	const [categoryId, setCategoryId] = React.useState(0)
+	const [isLoading, setIsLoading] = React.useState(true)
 	const [searchValue, setSearchValue] = React.useState('')
 	const [collections, setCollections] = React.useState([])
 
 	React.useEffect(() => {
+		setIsLoading(true)
 		const url = `https://644ea6b91b4567f4d58d0dda.mockapi.io/photo_collections?${
 			categoryId ? `category=${categoryId}` : ''
 		}`
@@ -36,6 +38,7 @@ function App() {
 				console.warn(err)
 				alert('An error occurred while fetching data')
 			})
+			.finally(() => setIsLoading(false))
 	}, [categoryId])
 
 	return (
@@ -61,15 +64,19 @@ function App() {
 				/>
 			</div>
 			<div className='content'>
-				{collections
-					.filter((obj) =>
-						obj.name.toLowerCase().includes(searchValue.toLowerCase())
-					)
-					.map((obj, index) => {
-						return (
-							<Collection name={obj.name} images={obj.photos} key={index} />
+				{isLoading ? (
+					<h2>Loading...</h2>
+				) : (
+					collections
+						.filter((obj) =>
+							obj.name.toLowerCase().includes(searchValue.toLowerCase())
 						)
-					})}
+						.map((obj, index) => {
+							return (
+								<Collection name={obj.name} images={obj.photos} key={index} />
+							)
+						})
+				)}
 			</div>
 			<ul className='pagination'>
 				<li>1</li>
