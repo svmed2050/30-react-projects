@@ -8,34 +8,50 @@ https://mockapi.io
 https://644ea6b91b4567f4d58d0dda.mockapi.io/photo_collections 
 */
 
+const cats = [
+	{ name: 'Все' },
+	{ name: 'Море' },
+	{ name: 'Горы' },
+	{ name: 'Архитектура' },
+	{ name: 'Города' },
+]
+
 function App() {
+	const [categoryId, setCategoryId] = React.useState(0)
 	const [searchValue, setSearchValue] = React.useState('')
 	const [collections, setCollections] = React.useState([])
 
 	React.useEffect(() => {
-		const url = `https://644ea6b91b4567f4d58d0dda.mockapi.io/photo_collections`
+		const url = `https://644ea6b91b4567f4d58d0dda.mockapi.io/photo_collections?${
+			categoryId ? `category=${categoryId}` : ''
+		}`
 
 		fetch(url)
 			.then((res) => res.json())
 			.then((json) => {
-				setCollections(json[0].collections)
+				setCollections(json)
+				console.log(json)
 			})
 			.catch((err) => {
 				console.warn(err)
 				alert('An error occurred while fetching data')
 			})
-	}, [])
+	}, [categoryId])
 
 	return (
 		<div className='App'>
 			<h1>Моя коллекция фотографий</h1>
 			<div className='top'>
 				<ul className='tags'>
-					<li className='active'>Все</li>
-					<li>Горы</li>
-					<li>Море</li>
-					<li>Архитектура</li>
-					<li>Города</li>
+					{cats.map((obj, index) => (
+						<li
+							onClick={() => setCategoryId(index)}
+							className={categoryId === index ? 'active' : ''}
+							key={obj.name}
+						>
+							{obj.name}
+						</li>
+					))}
 				</ul>
 				<input
 					value={searchValue}
