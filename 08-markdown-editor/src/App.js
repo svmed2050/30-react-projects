@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import marked from 'marked'
+import ReactMarkdown from 'react-markdown'
 import './App.css'
 
 export default function App() {
@@ -13,10 +14,12 @@ export default function App() {
 		<div className='app'>
 			<textarea onChange={handleChange} value={markdown} />
 
-			<div
+			{/* <div
 				className='preview'
 				dangerouslySetInnerHTML={{ __html: marked(markdown) }}
-			/>
+			/> */}
+
+			<ReactMarkdown className='preview' source={markdown} />
 		</div>
 	)
 }

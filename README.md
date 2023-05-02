@@ -1,4 +1,4 @@
-## 7/30 projects (react)
+## 8/30 projects (react)
 
 <!-- [Menu of projects](https://svmed2050.github.io/50-projects-js) -->
 
@@ -11,3 +11,4 @@
 | 05    | [Currency Convertor](https://github.com/svmed2050/30-react-projects/tree/main/05-currency-convertor) | [Live Demo](https://05-currency-convertor.netlify.app) |
 | 06    | [Photos Project](https://github.com/svmed2050/30-react-projects/tree/main/06-photos)                 | [Live Demo](https://06-photos.netlify.app)             |
 | 07    | [Pomodoro](https://github.com/svmed2050/30-react-projects/tree/main/07-pomodoro)                     | [Live Demo](https://07-pomodoro.netlify.app)           |
+| 08    | [Markdown Editor](https://github.com/svmed2050/30-react-projects/tree/main/08-markdown-editor)       | [Live Demo](https://08-markdown-editor.netlify.app)    |
