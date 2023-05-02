@@ -1,12 +1,22 @@
-import React from 'react';
-import './App.css';
+import React, { useState } from 'react'
+import marked from 'marked'
+import './App.css'
 
 export default function App() {
-  return (
-    <div className="app">
-      <textarea />
+	const [markdown, setMarkdown] = useState('# sup')
 
-      <div className="preview" />
-    </div>
-  );
+	function handleChange(e) {
+		setMarkdown(e.target.value)
+	}
+
+	return (
+		<div className='app'>
+			<textarea onChange={handleChange} value={markdown} />
+
+			<div
+				className='preview'
+				dangerouslySetInnerHTML={{ __html: marked(markdown) }}
+			/>
+		</div>
+	)
 }
