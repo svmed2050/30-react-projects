@@ -12,9 +12,16 @@ const choices = [
 
 export default function App() {
 	const [userChoice, setUserChoice] = useState(null)
+	const [computerChoice, setComputerChoice] = useState(null)
+
+	useEffect(() => {
+		const randomChoice = choices[Math.floor(Math.random() * choices.length)]
+		setComputerChoice(randomChoice)
+	}, [])
 
 	function handleUserChoice(choice) {
-		const userChoice = choices.find((c) => c.id === choice)
+		const chosenChoice = choices.find((c) => c.id === choice)
+		setUserChoice(chosenChoice)
 	}
 
 	return (
