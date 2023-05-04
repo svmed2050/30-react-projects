@@ -23,9 +23,16 @@ export default function App() {
 	const [gameState, setGameState] = useState(null)
 
 	useEffect(() => {
+		restartGame()
+	}, [])
+
+	function restartGame() {
+		setGameState(null)
+		setUserChoice(null)
+
 		const randomChoice = choices[Math.floor(Math.random() * choices.length)]
 		setComputerChoice(randomChoice)
-	}, [])
+	}
 
 	function handleUserChoice(choice) {
 		const chosenChoice = choices.find((c) => c.id === choice)
@@ -72,7 +79,10 @@ export default function App() {
 
 			{/* the popup to show win/lose/draw */}
 			{gameState && (
-				<div className={`game-state ${gameState}`}>
+				<div
+					onClick={() => restartGame()}
+					className={`game-state ${gameState}`}
+				>
 					<div>
 						<div className='game-state-content'>
 							<p>{renderComponent(userChoice)}</p>
@@ -82,6 +92,7 @@ export default function App() {
 
 							<p>{renderComponent(computerChoice)}</p>
 						</div>
+						<button>Play Again</button>
 					</div>
 				</div>
 			)}
